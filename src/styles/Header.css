@@ -1,159 +1,163 @@
-/* --- General Header Styles --- */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.05); /* glass effect */
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: all 0.3s ease;
-  overflow-x: hidden; /* prevent horizontal scroll */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* --- Container --- */
-.header .container {
-  max-width: 1200px;
+/* Prevent horizontal scrollbar on body */
+body {
+  overflow-x: hidden;
+}
+ 
+header {
+  background: linear-gradient(90deg,#ff6a00 0%, #ee0979 100%);
+  padding: 20px 15px; /* Reduced padding to minimize width */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1400px;
+  width: 100%; /* Ensure container doesn't exceed viewport */
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 15px; /* Add padding to container instead of header */
 }
 
-/* --- Logo --- */
-.header .logo {
-  font-size: 1.8rem;
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-size: 28px;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  letter-spacing: 1px;
+  background: linear-gradient(45deg,#b48d8d, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.3s ease;
 }
 
-.header .logo:hover {
-  transform: scale(1.05);
-}
-
-/* --- Navigation --- */
-.nav ul {
+.nav-links {
   list-style: none;
   display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
+  gap: 30px;
 }
 
-.nav ul li a {
-  color: #fff;
+.nav-links li a {
+  color: #ffffff;
   text-decoration: none;
+  font-size: 16px;
   font-weight: 500;
   position: relative;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.nav ul li a::after {
-  content: "";
+.nav-links li a:hover {
+  color: #e3382f#ff6a00 , #ee0979;
+}
+
+.nav-links li a::after {
+  content: '';
   position: absolute;
-  left: 0;
-  bottom: -5px;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  bottom: -5px;
+  left: 0;
+  background: #ffffff;
   transition: width 0.3s ease;
 }
 
-.nav ul li a:hover::after {
+.nav-links li a:hover::after {
   width: 100%;
 }
 
-/* --- Hamburger --- */
 .hamburger {
   display: none;
   flex-direction: column;
   cursor: pointer;
   gap: 5px;
-  z-index: 1100;
 }
 
-.hamburger .line {
-  width: 25px;
+.hamburger span {
+  background: #e0e0e0;
   height: 3px;
-  background: #fff;
+  width: 28px;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
-/* --- Mobile Navigation --- */
+/* Mobile Menu */
 @media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100vw; /* Use viewport width to prevent overflow */
+    max-width: 100%; /* Ensure it doesn't exceed viewport */
+    background: linear-gradient(90deg, #df4444 0%, #f52900 100%);
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 10px 10px;
+    overflow-x: hidden; /* Prevent internal horizontal scroll */
+  }
+
+  .nav-links.active {
+    display: flex;
+    animation: slideIn 0.3s ease;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .nav-links li a {
+    font-size: 18px;
+  }
+
   .hamburger {
     display: flex;
   }
 
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0; /* changed from right:0 */
-    width: 100vw; /* full viewport width */
-    height: 100vh; /* full screen height */
-    background: rgba(0, 0, 0, 0.85); /* dark glass effect */
-    backdrop-filter: blur(20px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; /* stack links vertically */
-    transform: translateX(100%); /* hidden offscreen */
-    transition: transform 0.3s ease;
-    overflow-y: auto; /* scroll if content exceeds screen */
-    z-index: 1050;
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
   }
 
-  .nav.open {
-    transform: translateX(0); /* slide in fully */
-  }
-
-  .nav ul {
-    flex-direction: column;
-    gap: 2.5rem;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  .nav ul li a {
-    font-size: 1.5rem;
-    color: #fff;
-  }
-
-  /* Hamburger animation */
-  .hamburger.active .line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active .line:nth-child(2) {
+  .hamburger.active span:nth-child(2) {
     opacity: 0;
   }
 
-  .hamburger.active .line:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
   }
 }
 
-/* --- Prevent Body Scroll When Menu Open --- */
-body.menu-open {
-  overflow: hidden;
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex !important;
+  }
 }
 
-/* --- Smooth Transitions for Links and Logo --- */
-.header .logo,
-.nav ul li a {
-  transition: all 0.3s ease;
-}
-
-.nav ul li a:hover {
-  color: #ff6a00;
-  transform: scale(1.05);
+/* Animation for mobile menu */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
