@@ -5,6 +5,7 @@ import SocialIcons from "./components/SocialIcons.jsx";
 import Portfolio from "./components/Portfolio.jsx";
 import Contact from "./components/Contact.jsx";
 import Grid from "./components/grid.jsx";
+import Footer from "./components/Footer.jsx";
 import './styles/App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Portfolio />
       <Grid/>
       <Contact />
+      <Footer />
       
     </div>
   );

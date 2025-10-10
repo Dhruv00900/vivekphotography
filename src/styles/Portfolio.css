@@ -5,16 +5,104 @@
   background: #000000;
   color: #fff;
   font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-header {
+  position: relative;
+  margin-bottom: 4rem;
 }
 
 .portfolio h2 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 600;
-  margin-bottom: 3rem;
-  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
   background: linear-gradient(90deg, #f7f7f7, #999);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Shape Divider --- */
+.shape-divider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
+  z-index: 1;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+}
+
+.shape-1 {
+  width: 80px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-2 {
+  width: 60px;
+  height: 60px;
+  top: 40px;
+  right: 20px;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+  width: 40px;
+  height: 40px;
+  bottom: 0;
+  left: 40%;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* --- Category Filters --- */
+.category-filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
 }
 
 /* --- Carousel Container --- */
@@ -24,20 +112,24 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 2rem 0;
 }
 
 /* --- Navigation Buttons --- */
 .nav-button {
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #fff;
-  font-size: 2.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  backdrop-filter: blur(5px);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
 }
 
 .nav-button:hover {
@@ -46,49 +138,91 @@
 }
 
 .nav-button.left {
-  position: absolute;
   left: 5%;
 }
 
 .nav-button.right {
-  position: absolute;
   right: 5%;
+}
+
+.nav-arrow {
+  width: 20px;
+  height: 20px;
+  border-top: 3px solid #fff;
+  border-right: 3px solid #fff;
+  transition: all 0.3s ease;
+}
+
+.nav-button.left .nav-arrow {
+  transform: rotate(-135deg);
+  margin-left: 5px;
+}
+
+.nav-button.right .nav-arrow {
+  transform: rotate(45deg);
+  margin-right: 5px;
 }
 
 /* --- Carousel --- */
 .carousel {
   position: relative;
-  width: 80%;
+  width: 85%;
   height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
 /* --- Carousel Items --- */
 .carousel-item {
   position: absolute;
-  width: 60%;
-  height: 80%;
-  transition: all 0.8s ease;
+  width: 55%;
+  height: 75%;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   opacity: 0;
-  transform: scale(0.8) translateX(100px) rotateY(30deg);
   cursor: pointer;
-  border-radius: 1rem;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .carousel-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
+  transition: all 0.8s ease;
 }
 
-.carousel-item.center img:hover {
-  transform: scale(1.05);
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 2rem 1rem 1rem;
+  transform: translateY(100%);
+  transition: transform 0.5s ease;
+}
+
+.carousel-item:hover .image-overlay {
+  transform: translateY(0);
+}
+
+.category-tag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
 }
 
 /* --- Position Transitions --- */
@@ -96,36 +230,116 @@
   opacity: 1;
   transform: translateX(0) scale(1) rotateY(0deg);
   z-index: 3;
+  border-radius: 15px;
+}
+
+.carousel-item.center img:hover {
+  transform: scale(1.08);
 }
 
 .carousel-item.left {
-  opacity: 0.7;
-  transform: translateX(-60%) scale(0.9) rotateY(25deg);
+  opacity: 0.6;
+  transform: translateX(-75%) scale(0.85) rotateY(15deg) skewY(2deg);
   z-index: 2;
+  border-radius: 30px 10px 30px 10px;
+  filter: brightness(0.7);
 }
 
 .carousel-item.right {
-  opacity: 0.7;
-  transform: translateX(60%) scale(0.9) rotateY(-25deg);
+  opacity: 0.6;
+  transform: translateX(75%) scale(0.85) rotateY(-15deg) skewY(-2deg);
   z-index: 2;
+  border-radius: 10px 30px 10px 30px;
+  filter: brightness(0.7);
+}
+
+.carousel-item.next {
+  opacity: 0.3;
+  transform: translateX(120%) scale(0.7) rotateY(-25deg);
+  z-index: 1;
+}
+
+/* --- Dots Indicator --- */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.3);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* --- Small Screens --- */
 @media (max-width: 768px) {
+  .portfolio h2 {
+    font-size: 2rem;
+  }
+
   .carousel {
-    width: 100%;
+    width: 95%;
     height: 400px;
   }
 
   .carousel-item {
-    width: 80%;
+    width: 75%;
+  }
+
+  .nav-button {
+    width: 50px;
+    height: 50px;
   }
 
   .nav-button.left {
-    left: 2%;
+    left: 1%;
   }
 
   .nav-button.right {
-    right: 2%;
+    right: 1%;
+  }
+
+  .category-filters {
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .shape-divider {
+    width: 200px;
+  }
+}
+
+/* --- Animation Enhancements --- */
+.carousel-item {
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
